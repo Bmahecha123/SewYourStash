@@ -14,7 +14,7 @@ class _StashPageState extends State<StashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar('My Stash', context),
-      drawer: drawer(context),
+      drawer: AppDrawer(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +27,7 @@ class _StashPageState extends State<StashPage> {
         tooltip: 'Add to Stash!',
         child: Icon(Icons.create),
         onPressed: () {
-          
+
         },
       ),
     );

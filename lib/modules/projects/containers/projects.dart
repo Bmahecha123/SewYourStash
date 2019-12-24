@@ -14,7 +14,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar('Projects Page', context),
-      drawer: drawer(context),
+      drawer: AppDrawer(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +27,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
         tooltip: 'Create Project!',
         child: Icon(Icons.create),
         onPressed: () {
-          
+
         },
       ),
     );

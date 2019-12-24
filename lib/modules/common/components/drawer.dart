@@ -1,36 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:sew_your_stash/theme/theme.dart';
 
-Drawer drawer(BuildContext context) {
-  return Drawer(
-    child: ListView(
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        UserAccountsDrawerHeader(
-          accountEmail: Text('BMahecha123@gmail.com'),
-          accountName: Text('BMahecha123'),
-          decoration: BoxDecoration(
-            color: Colors.teal
+class AppDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: CircleAvatar(
+              //child: Icon(Icons.person),
+              backgroundColor: grey,
+            ),
+            decoration: BoxDecoration(color: Colors.teal),
           ),
-        ),
-        ListTile(
-          title: Text('Home'),
-          onTap: () {
-            Navigator.popAndPushNamed(context, '/');
-          },
-        ),
-        ListTile(
-          title: Text('My Stash'),
-          onTap: () {
-            Navigator.popAndPushNamed(context, '/stash');
-          },
-        ),
-        ListTile(
-          title: Text('Projects'),
-          onTap: () {
-            Navigator.popAndPushNamed(context, '/projects');
-          },
-        )
-      ],
-    ),
-  );
+          listTileTheme(
+              context,
+              ListTile(
+                  leading: iconTheme(context, Icon(Icons.dashboard)),
+                  title: Text('Dashboard'),
+                  onTap: () {
+                    Navigator.popAndPushNamed(context, '/');
+                  })),
+          listTileTheme(
+              context,
+              ListTile(
+                leading: iconTheme(context, Icon(Icons.book)),
+                title: Text('My Stash'),
+                onTap: () {
+                  Navigator.popAndPushNamed(context, '/stash');
+                },
+              )),
+          listTileTheme(
+              context,
+              ListTile(
+                leading: iconTheme(context, Icon(Icons.work)),
+                title: Text('Projects'),
+                onTap: () {
+                  Navigator.popAndPushNamed(context, '/projects');
+                },
+              )),
+          Divider(),
+          ListTile(
+            leading: iconTheme(context, iconTheme(context, Icon(Icons.person))),
+            title: Text('Sign In'),
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
 }

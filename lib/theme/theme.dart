@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
+final Color grey = Color(0xffc5c8d1);
+final Color blue = Color(0xff06749c);
+final Color lightBlue = Color(0xffcce0e1);
+
 ThemeData appTheme(BuildContext context) {
   return ThemeData(
         primarySwatch: Colors.teal,
-        canvasColor: Color(0xffcce0e1),
+        canvasColor: lightBlue,
         fontFamily: 'InriaSerif',
         floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: Color(0xffc5c8d1),
-          foregroundColor: Color(0xff06749c),
-          
+          backgroundColor: grey,
+          foregroundColor: blue,
         ),
-        scaffoldBackgroundColor: Color(0xffcce0e1),
+        scaffoldBackgroundColor: lightBlue,
         textTheme: Theme.of(context).textTheme.apply(
           fontFamily: 'InriaSerif',
         ),
@@ -22,3 +25,16 @@ ThemeData appTheme(BuildContext context) {
           tall: Typography.tall2018)
       );
 }
+
+
+ListTileTheme listTileTheme(BuildContext context, Widget child) => ListTileTheme(
+  iconColor: grey,
+  child: child,
+);
+
+IconTheme iconTheme(BuildContext context, Widget child) => IconTheme(
+  child: child,
+  data: IconThemeData(
+    color: blue,
+  ),
+);
