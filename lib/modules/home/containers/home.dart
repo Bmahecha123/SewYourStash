@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:sew_your_stash/models/branding.dart';
-import 'package:sew_your_stash/models/fabric.dart';
+import 'package:sew_your_stash/models/fabricItem.dart';
 import 'package:sew_your_stash/models/project.dart';
+import 'package:sew_your_stash/models/stashItem.dart';
 import 'package:sew_your_stash/modules/common/components/appBar.dart';
 import 'package:sew_your_stash/modules/common/components/drawer.dart';
 
@@ -47,16 +46,18 @@ class _HomePageState extends State<HomePage> {
         
         for (var i = 0; i < projectsData.length; i++) {
           List<dynamic> fabricsData = projectsData[i]['fabric'];
-          List<Fabric> fabrics = [];
+          List<FabricItem> fabrics = [];
+          List<StashItem> stashItems = [];
 
-          fabricsData.forEach((fabric) => {
-            fabrics.add(Fabric.fromJson(fabric))
-          });
+          for (dynamic fabric in fabricsData) {
+            fabrics.add(FabricItem.fromJson(fabric));
+            stashItems.add(StashItem.fromJson(fabric));
+          }
 
           final Project project = Project(
             name: projectsData[i]['name'],
             description: projectsData[i]['description'],
-            fabric: fabrics);
+            fabricItems: fabrics);
             
             fetchedProjects.add(project);
         }

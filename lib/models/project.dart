@@ -1,9 +1,9 @@
-import 'package:sew_your_stash/models/fabric.dart';
+import 'package:sew_your_stash/models/fabricItem.dart';
 
 class Project {
   final String name;
   final String description;
-  final List<Fabric> fabric;
+  final List<FabricItem> fabricItems;
 
-  Project({this.name, this.description, this.fabric});
+  Project({this.name, this.description, this.fabricItems});
 }
