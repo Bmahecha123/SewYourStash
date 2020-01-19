@@ -27,7 +27,7 @@ class StashItem implements Fabric {
       this.branding, this.tags, this.yardageTotal});
 
    @override
-   static Map<String, int> fiberMap(Map<String, dynamic> parsedJson) {
+   static Map<String, int> fiberMap(Map parsedJson) {
       List<String> values = List.from(parsedJson.keys);
 
       Map<String, int> fiberContents = Map();
@@ -39,17 +39,29 @@ class StashItem implements Fabric {
       return fiberContents;
     }
 
-    factory StashItem.fromJson(Map<String, dynamic> parsedJson) {
+    factory StashItem.fromJson(Map parsedJson) {
       return StashItem(
         type: parsedJson['type'],
         subType: parsedJson['subType'],
         weight: parsedJson['weight'],
-        fiberContent: fiberMap(parsedJson['fiberContent'] as Map<String, dynamic>), 
+        fiberContent: fiberMap(parsedJson['fiberContent']), 
         yardageTotal: parsedJson['yardageTotal'],
         width: parsedJson['width'],
         intendedUse: parsedJson['intendedUse'],
-        branding: Branding.fromJson(parsedJson['branding'] as Map<String, dynamic>),
+        branding: Branding.fromJson(parsedJson['branding']),
         tags: List<String>.from(parsedJson['tags'])
       );
     }
+
+    Map<String, dynamic> toJson() => {
+      'type': type,
+      'subType': subType,
+      'weight': weight,
+      'fiberContent': fiberContent,
+      'width': width,
+      'intendedUse': intendedUse,
+      'branding': branding.toJson(),
+      'tags': tags,
+      'yardageTotal': yardageTotal
+    };
 }

@@ -9,6 +9,9 @@ ThemeData appTheme(BuildContext context) {
         primarySwatch: Colors.teal,
         canvasColor: lightBlue,
         fontFamily: 'InriaSerif',
+        buttonTheme: ButtonThemeData(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: grey,
           foregroundColor: blue,

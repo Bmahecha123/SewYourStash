@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sew_your_stash/services/sign_in.dart';
 import 'package:sew_your_stash/theme/theme.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -44,8 +45,11 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: iconTheme(context, iconTheme(context, Icon(Icons.person))),
-            title: Text('Sign In'),
-            onTap: () {},
+            title: Text('Sign Out'),
+            onTap: () {
+              signOutGoogle();
+              Navigator.popAndPushNamed(context, '/login');
+            },
           ),
         ],
       ),

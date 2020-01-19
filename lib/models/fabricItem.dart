@@ -3,25 +3,26 @@ import 'package:sew_your_stash/models/fabric.dart';
 
 class FabricItem implements Fabric {
     @override
-    final String type;
+    String type;
     @override
-    final String subType;
+    String subType;
     @override
-    final String weight;
+    String weight;
     @override
-    final Map<String, int> fiberContent;
+    Map<String, int> fiberContent;
     @override
-    final int width;
+    int width;
     @override
-    final String intendedUse;
+    String intendedUse;
     @override
-    final Branding branding;
+    Branding branding;
     @override
-    final List<String> tags;
-    final int yardageUsed;
+    List<String> tags;
+    int yardageUsed;
+    int yardageTotal;
 
     FabricItem({this.type, this.subType, this.weight, this.fiberContent,
-    this.yardageUsed, this.width, this.intendedUse, this.branding, this.tags});
+    this.yardageUsed, this.yardageTotal, this.width, this.intendedUse, this.branding, this.tags});
 
     @override
     static Map<String, int> fiberMap(Map<String, dynamic> parsedJson) {
@@ -43,10 +44,24 @@ class FabricItem implements Fabric {
         weight: parsedJson['weight'],
         fiberContent: fiberMap(parsedJson['fiberContent'] as Map<String, dynamic>), 
         yardageUsed: parsedJson['yardageUsed'],
+        yardageTotal: parsedJson['yardageTotal'],
         width: parsedJson['width'],
         intendedUse: parsedJson['intendedUse'],
         branding: Branding.fromJson(parsedJson['branding'] as Map<String, dynamic>),
         tags: List<String>.from(parsedJson['tags'])
       );
     }
+
+    Map<String, dynamic> toJson() => {
+      'type': type,
+      'subType': subType,
+      'weight': weight,
+      'fiberContent': fiberContent,
+      'width': width,
+      'intendedUse': intendedUse,
+      'branding': branding.toJson(),
+      'tags': tags,
+      'yardageUsed': yardageUsed,
+      'yardageTotal': yardageTotal
+    };
 }
