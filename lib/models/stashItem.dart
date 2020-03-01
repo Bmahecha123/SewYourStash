@@ -4,22 +4,22 @@ import 'branding.dart';
 
 class StashItem implements Fabric {
     @override
-    final String type;
+    String type;
     @override
-    final String subType;
+    String subType;
     @override
-    final String weight;
+    String weight;
     @override
-    final Map<String, int> fiberContent;
+    Map<String, int> fiberContent;
     @override
-    final int width;
+    int width;
     @override
-    final String intendedUse;
+    String intendedUse;
     @override
-    final Branding branding;
+    Branding branding;
     @override
-    final List<String> tags;
-    final int yardageTotal;
+    List<String> tags;
+    int yardageTotal;
 
     StashItem({
       this.type, this.subType, this.weight, 

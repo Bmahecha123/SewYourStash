@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:sew_your_stash/models/branding.dart';
 import 'package:sew_your_stash/models/stash.dart';
 import 'package:sew_your_stash/models/stashItem.dart';
+import 'package:sew_your_stash/modules/common/services/sign_in.dart';
 import 'package:sew_your_stash/modules/common/services/stashService.dart';
-import 'package:sew_your_stash/services/sign_in.dart';
 import 'package:sew_your_stash/theme/theme.dart';
 
 class LoginPage extends StatefulWidget {

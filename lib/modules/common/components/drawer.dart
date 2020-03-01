@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sew_your_stash/services/sign_in.dart';
+import 'package:sew_your_stash/modules/common/services/sign_in.dart';
 import 'package:sew_your_stash/theme/theme.dart';
 
 class AppDrawer extends StatelessWidget {

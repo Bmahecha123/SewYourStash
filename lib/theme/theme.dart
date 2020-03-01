@@ -10,6 +10,7 @@ ThemeData appTheme(BuildContext context) {
         canvasColor: lightBlue,
         fontFamily: 'InriaSerif',
         buttonTheme: ButtonThemeData(
+          alignedDropdown: true,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
         ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
