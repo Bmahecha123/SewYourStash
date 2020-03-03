@@ -1,4 +1,20 @@
+import 'package:shared_preferences/shared_preferences.dart';
 
-//TODO add method to save currentUserID to Local Storage
+Future<bool> addValToLocalStorage(String key, String value) async {
+  final prefs = await SharedPreferences.getInstance();
 
-//TODO add method to delete currentUserID from Local Storage
+  return prefs.setString(key, value);
+}
+
+Future<String> getValFromLocalStorage(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    return prefs.getString(key);
+}
+
+
+Future<bool> removeValFromLocalStorage(String key) async {
+  final prefs = await SharedPreferences.getInstance();
+
+  return prefs.remove(key);
+}

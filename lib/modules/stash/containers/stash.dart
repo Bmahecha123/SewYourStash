@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sew_your_stash/common/keys.dart';
 import 'package:sew_your_stash/models/fabricItem.dart';
 import 'package:sew_your_stash/models/stashItem.dart';
 import 'package:sew_your_stash/modules/common/components/appBar.dart';
 import 'package:sew_your_stash/modules/common/components/drawer.dart';
+import 'package:sew_your_stash/modules/common/services/local_storage.dart';
 import 'package:sew_your_stash/modules/common/services/stashService.dart';
 import 'package:sew_your_stash/modules/stash/components/stashDialog.dart';
 
@@ -46,11 +48,14 @@ class _StashPageState extends State<StashPage> {
                   _stashItemList.add(item);
 
                   //Save Fabric Item
-                  updateStash(
-                    "get ID from local storage", 
-                    _stashItemList.map((StashItem item) {
-                    return item.toJson();
-                  }));
+                  getValFromLocalStorage(googleId).then((String id) {
+                    final test = id;
+                  });
+                  // updateStash(
+                  //   "get ID from local storage", 
+                  //   _stashItemList.map((StashItem item) {
+                  //   return item.toJson();
+                  // }));
                 },
               )
           );

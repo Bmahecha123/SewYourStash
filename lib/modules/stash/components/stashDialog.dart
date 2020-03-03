@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sew_your_stash/models/fabricType.dart';
 import 'package:sew_your_stash/models/stashItem.dart';
 import 'package:sew_your_stash/theme/theme.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show TextInputFormatter, WhitelistingTextInputFormatter, rootBundle;
 
 class StashDialog extends StatefulWidget {
   final Function(StashItem) onStashItemAdded;
@@ -22,7 +22,8 @@ class _StashDialogState extends State<StashDialog> {
   final StashItem _stashItem = StashItem(
     type: null, 
     subType: null,
-    weight: "",
+    weight: null,
+    yardageTotal: null,
     tags: []);
   List<String> _fabricSubTypes = [];
 
@@ -86,12 +87,7 @@ class _StashDialogState extends State<StashDialog> {
                             child: Text(value.type)
                           );
                         }).toList(),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please select a fabric type.';
-                          }
-                          return null;
-                        },
+                        validator: (value) => value == null ? 'Please select a fabric type.' : null,
                       ),
                       Visibility(
                         visible: _fabricSubTypes.isNotEmpty,
@@ -121,6 +117,8 @@ class _StashDialogState extends State<StashDialog> {
                         },
                       ),
                       TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
                         decoration: InputDecoration(
                           labelText: 'Width',
                         ),
@@ -130,18 +128,14 @@ class _StashDialogState extends State<StashDialog> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
                         decoration: InputDecoration(
                           labelText: 'Yardage',
                         ),
                         onFieldSubmitted: (String newValue) {
                           _stashItem.yardageTotal = int.parse(newValue);
                         },
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter yardage.';
-                          }
-                          return null;
-                        },
+                        validator: (value) => value.isEmpty ? 'Please enter yardage.' : null,
                       ),
                       TextFormField(
                         decoration: InputDecoration(
@@ -169,7 +163,7 @@ class _StashDialogState extends State<StashDialog> {
                           _stashItem.branding.designer = newValue;
                         },
                       ),
-                      Padding(child: Text("Tags"), padding: EdgeInsets.all(5)),
+                      Padding(child: Text('Tags'), padding: EdgeInsets.all(5)),
                       ...?_stashItem.tags.map((tag) {
                         return ListTile(
                             title: Text(tag),
@@ -179,11 +173,11 @@ class _StashDialogState extends State<StashDialog> {
                             ),
                             onTap: () => setState(() {
                                   _stashItem.tags.remove(tag);
-                                }));
+                            }));
                       }),
                       TextFormField(
                         decoration: InputDecoration(
-                            labelText: "Press Enter to add Tag"),
+                            labelText: 'Press Enter to add Tag'),
                         onFieldSubmitted: (String tag) {
                           setState(() {
                             _stashItem.tags.add(tag);

@@ -1,12 +1,6 @@
-import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sew_your_stash/models/branding.dart';
-import 'package:sew_your_stash/models/stash.dart';
-import 'package:sew_your_stash/models/stashItem.dart';
 import 'package:sew_your_stash/modules/common/services/sign_in.dart';
-import 'package:sew_your_stash/modules/common/services/stashService.dart';
 import 'package:sew_your_stash/theme/theme.dart';
 
 class LoginPage extends StatefulWidget {
@@ -33,44 +27,6 @@ class _LoginPageState extends State<LoginPage> {
                 Navigator.popAndPushNamed(context, '/home');
               });
             }),
-            SizedBox(height: 50),
-            Text(
-              'Not a member?', 
-              style: TextStyle(fontSize: 20.0),
-            ),
-            _signInAndOutBtn('Sign up with Google', () {
-              signInWithGoogle().then((data) {
-                //TODO ADD SERVICE METHOD TO REGISTER USER IN DB
-                Navigator.popAndPushNamed(context, '/home');
-              });
-            }),
-            RaisedButton(onPressed: () {
-              //createStash('tester');
-              // List<Map<String, dynamic>> newItems = [
-              //   StashItem(
-              //     type: 'fabriccc', 
-              //     subType: 'subType', 
-              //     weight: '10pz', 
-              //     fiberContent: {'test': 33},
-              //     width: 34,
-              //     intendedUse: 'projects',
-              //     branding: Branding(brand: 'brian', designer: 'test'),
-              //     tags: ['cloth', 'tester'],
-              //     yardageTotal: 34).toJson(),
-              // ];
-              
-              // updateStash('tester', newItems);
-              getStash('tester')
-                .then((data) {
-                  Stash stash = Stash.fromSnapshot(data);
-                  Map<String, dynamic> mappp = data.data;
-                  List mapData = List.from(mappp['stashItems']);
-                  StashItem stashItem = StashItem.fromJson(mapData[0]);
-                  log(stashItem.subType);
-                }).catchError((e) {
-                  log(e.toString());
-                });
-            }, child: Text('Test add stuff'),)
           ],
         ),
       ),
