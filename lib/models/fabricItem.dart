@@ -7,11 +7,15 @@ class FabricItem implements Fabric {
     @override
     String subType;
     @override
-    String weight;
+    int weight;
+    @override
+    String weightUnit;
     @override
     Map<String, int> fiberContent;
     @override
     int width;
+    @override
+    String widthUnit;
     @override
     String intendedUse;
     @override
@@ -19,10 +23,13 @@ class FabricItem implements Fabric {
     @override
     List<String> tags;
     int yardageUsed;
+    @override
     int yardageTotal;
+    @override
+    String yardageUnit;
 
     FabricItem({this.type, this.subType, this.weight, this.fiberContent,
-    this.yardageUsed, this.yardageTotal, this.width, this.intendedUse, this.branding, this.tags});
+    this.yardageUsed, this.yardageTotal, this.width, this.intendedUse, this.branding, this.tags, weightUnit, yardageUnit, widthUnit});
 
     @override
     static Map<String, int> fiberMap(Map<String, dynamic> parsedJson) {
@@ -42,10 +49,13 @@ class FabricItem implements Fabric {
         type: parsedJson['type'],
         subType: parsedJson['subType'],
         weight: parsedJson['weight'],
+        weightUnit: parsedJson['weightUnit'],
         fiberContent: fiberMap(parsedJson['fiberContent'] as Map<String, dynamic>), 
         yardageUsed: parsedJson['yardageUsed'],
         yardageTotal: parsedJson['yardageTotal'],
+        yardageUnit: parsedJson['yardageUnit'],
         width: parsedJson['width'],
+        widthUnit: parsedJson['widthUnit'],
         intendedUse: parsedJson['intendedUse'],
         branding: Branding.fromJson(parsedJson['branding'] as Map<String, dynamic>),
         tags: List<String>.from(parsedJson['tags'])
@@ -56,12 +66,15 @@ class FabricItem implements Fabric {
       'type': type,
       'subType': subType,
       'weight': weight,
+      'weightUnit': weightUnit,
       'fiberContent': fiberContent,
       'width': width,
+      'widthUnit': widthUnit,
       'intendedUse': intendedUse,
       'branding': branding.toJson(),
       'tags': tags,
       'yardageUsed': yardageUsed,
-      'yardageTotal': yardageTotal
+      'yardageTotal': yardageTotal,
+      'yardageUnit': yardageUnit
     };
 }

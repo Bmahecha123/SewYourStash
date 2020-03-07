@@ -1,10 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:sew_your_stash/common/units.dart';
+import 'package:sew_your_stash/models/branding.dart';
 import 'package:sew_your_stash/models/fabricType.dart';
 import 'package:sew_your_stash/models/stashItem.dart';
 import 'package:sew_your_stash/theme/theme.dart';
-import 'package:flutter/services.dart' show TextInputFormatter, WhitelistingTextInputFormatter, rootBundle;
+import 'package:flutter/services.dart'
+    show TextInputFormatter, WhitelistingTextInputFormatter, rootBundle;
 
 class StashDialog extends StatefulWidget {
   final Function(StashItem) onStashItemAdded;
@@ -20,12 +23,14 @@ class _StashDialogState extends State<StashDialog> {
   final _formKey = GlobalKey<FormState>();
   List<FabricType> fabricTypes = [];
   final StashItem _stashItem = StashItem(
-    type: null, 
-    subType: null,
-    weight: null,
-    yardageTotal: null,
-    tags: []);
+      type: null,
+      subType: null,
+      weight: null,
+      yardageTotal: null,
+      branding: Branding(brand: "", designer: ""),
+      tags: []);
   List<String> _fabricSubTypes = [];
+  String _widthUnit = 'in';
 
   final Function(StashItem) onStashItemAdded;
 
@@ -37,11 +42,13 @@ class _StashDialogState extends State<StashDialog> {
 
     rootBundle.loadString('assets/fabricTypes.json').then((jsonString) {
       final jsonResponse = json.decode(jsonString);
-      
+
       List<dynamic> fabricTypeMap = List.from(jsonResponse);
 
       setState(() {
-        fabricTypes = fabricTypeMap.map((dynamic fabricType) => FabricType.fromJson(fabricType)).toList();
+        fabricTypes = fabricTypeMap
+            .map((dynamic fabricType) => FabricType.fromJson(fabricType))
+            .toList();
       });
     });
   }
@@ -77,71 +84,156 @@ class _StashDialogState extends State<StashDialog> {
                             _stashItem.type = newValue;
                             _stashItem.subType = null;
                             _fabricSubTypes = fabricTypes
-                              .firstWhere((FabricType type) => type.type.startsWith(newValue))
-                              .subTypes;
+                                .firstWhere((FabricType type) =>
+                                    type.type.startsWith(newValue))
+                                .subTypes;
                           });
                         },
                         items: fabricTypes.map((FabricType value) {
                           return DropdownMenuItem<String>(
-                            value: value.type,
-                            child: Text(value.type)
-                          );
+                              value: value.type, child: Text(value.type));
                         }).toList(),
-                        validator: (value) => value == null ? 'Please select a fabric type.' : null,
+                        validator: (value) => value == null
+                            ? 'Please select a fabric type.'
+                            : null,
                       ),
                       Visibility(
                         visible: _fabricSubTypes.isNotEmpty,
                         child: DropdownButtonFormField<String>(
-                          value: _stashItem.subType,
-                          hint: Text('Select Fabric SubType'),
-                          icon: Icon(Icons.arrow_drop_down),
-                          iconSize: 24,
-                          elevation: 16,
-                          items: _fabricSubTypes.map((String subType) {
-                            return DropdownMenuItem<String>(
-                              value: subType,
-                              child: Text(subType)
-                            );
-                          }).toList(), 
-                          onChanged: (String newValue) {
-                            setState(() {
-                              _stashItem.subType = newValue;
-                            });
-                          }),),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Weight',
-                        ),
-                        onFieldSubmitted: (String newValue) {
-                          _stashItem.weight = newValue;
-                        },
+                            value: _stashItem.subType,
+                            hint: Text('Select Fabric SubType'),
+                            icon: Icon(Icons.arrow_drop_down),
+                            iconSize: 24,
+                            elevation: 16,
+                            items: _fabricSubTypes.map((String subType) {
+                              return DropdownMenuItem<String>(
+                                  value: subType, child: Text(subType));
+                            }).toList(),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                _stashItem.subType = newValue;
+                              });
+                            }),
                       ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
-                        decoration: InputDecoration(
-                          labelText: 'Width',
+                      Row(
+                          children: <Widget>[
+                            Flexible(
+                                flex: 3,
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    WhitelistingTextInputFormatter.digitsOnly
+                                  ],
+                                  decoration: InputDecoration(
+                                    labelText: 'Weight',
+                                    contentPadding: EdgeInsets.all(0.0),
+                                  ),
+                                  onChanged: (String newValue) {
+                                    _stashItem.weight = int.parse(newValue);
+                                  },
+                                  validator: (value) => value.isEmpty ? 'Please enter weight.' : null,
+                                )),
+                            Flexible(
+                              flex: 1,
+                              child: DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(0.0)
+                                ),
+                                  value: _stashItem.weightUnit,
+                                  items: measurementUnits
+                                      .map((String unit) =>
+                                          DropdownMenuItem<String>(
+                                              value: unit, child: Text(unit)))
+                                      .toList(),
+                                  onChanged: (value) => setState(() {
+                                        _stashItem.weightUnit = value;
+                                      }),
+                                  validator: (value) => value == null ? 'Please select a unit.' : null,
+                              ),
+                            )
+                          ],
                         ),
-                        onFieldSubmitted: (String newValue) {
-                          _stashItem.width = int.parse(newValue);
-                        },
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
-                        decoration: InputDecoration(
-                          labelText: 'Yardage',
+                      Row(
+                          children: <Widget>[
+                            Flexible(
+                                flex: 3,
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    WhitelistingTextInputFormatter.digitsOnly
+                                  ],
+                                  decoration: InputDecoration(
+                                    labelText: 'Width',
+                                    contentPadding: EdgeInsets.all(0.0),
+                                  ),
+                                  onChanged: (String newValue) {
+                                    _stashItem.width = int.parse(newValue);
+                                  },
+                                  validator: (value) => value.isEmpty ? 'Please enter width.' : null,
+                                )),
+                            Flexible(
+                              flex: 1,
+                              child: DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(0.0)
+                                ),
+                                  value: _stashItem.widthUnit,
+                                  items: measurementUnits
+                                      .map((String unit) =>
+                                          DropdownMenuItem<String>(
+                                              value: unit, child: Text(unit)))
+                                      .toList(),
+                                  onChanged: (value) => setState(() {
+                                        _stashItem.widthUnit = value;
+                                      }),
+                                  validator: (value) => value == null ? 'Please select a unit.' : null,
+                              ),
+                            )
+                          ],
                         ),
-                        onFieldSubmitted: (String newValue) {
-                          _stashItem.yardageTotal = int.parse(newValue);
-                        },
-                        validator: (value) => value.isEmpty ? 'Please enter yardage.' : null,
-                      ),
+                      Row(
+                          children: <Widget>[
+                            Flexible(
+                                flex: 3,
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    WhitelistingTextInputFormatter.digitsOnly
+                                  ],
+                                  decoration: InputDecoration(
+                                    labelText: 'Yardage',
+                                    contentPadding: EdgeInsets.all(0.0),
+                                  ),
+                                  onChanged: (String newValue) {
+                                    _stashItem.yardageTotal = int.parse(newValue);
+                                  },
+                                  validator: (value) => value.isEmpty ? 'Please enter yardage.' : null,
+                                )),
+                            Flexible(
+                              flex: 1,
+                              child: DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(0.0)
+                                ),
+                                  value: _stashItem.yardageUnit,
+                                  items: measurementUnits
+                                      .map((String unit) =>
+                                          DropdownMenuItem<String>(
+                                              value: unit, child: Text(unit)))
+                                      .toList(),
+                                  onChanged: (value) => setState(() {
+                                    _stashItem.yardageUnit = value;
+                                  }),
+                                  validator: (value) => value == null ? 'Please select a unit.' : null,
+                              ),
+                            )
+                          ],
+                        ),
                       TextFormField(
                         decoration: InputDecoration(
                           labelText: 'Intended Use',
                         ),
-                        onFieldSubmitted: (String newValue) {
+                        onChanged: (String newValue) {
                           _stashItem.intendedUse = newValue;
                         },
                       ),
@@ -151,7 +243,7 @@ class _StashDialogState extends State<StashDialog> {
                         decoration: InputDecoration(
                           labelText: 'Brand',
                         ),
-                        onFieldSubmitted: (String newValue) {
+                        onChanged: (String newValue) {
                           _stashItem.branding.brand = newValue;
                         },
                       ),
@@ -159,7 +251,7 @@ class _StashDialogState extends State<StashDialog> {
                         decoration: InputDecoration(
                           labelText: 'Designer',
                         ),
-                        onFieldSubmitted: (String newValue) {
+                        onChanged: (String newValue) {
                           _stashItem.branding.designer = newValue;
                         },
                       ),
@@ -173,7 +265,7 @@ class _StashDialogState extends State<StashDialog> {
                             ),
                             onTap: () => setState(() {
                                   _stashItem.tags.remove(tag);
-                            }));
+                                }));
                       }),
                       TextFormField(
                         decoration: InputDecoration(
