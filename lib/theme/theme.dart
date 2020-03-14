@@ -42,3 +42,11 @@ IconTheme iconTheme(BuildContext context, Widget child) => IconTheme(
     color: blue,
   ),
 );
+
+TextStyle headerFontStyle() {
+  return TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+}
+
+TextStyle itemFontStyle() {
+  return TextStyle(fontSize: 20);
+}

@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
             _signInAndOutBtn('Sign in with Google', () {
               signInWithGoogle().then((data) {
                 //TODO ADD SERVICE METHOD TO GRAB USER IN DB
-                Navigator.popAndPushNamed(context, '/home');
+                Navigator.popAndPushNamed(context, '/stash');
               });
             }),
           ],

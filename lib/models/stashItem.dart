@@ -48,18 +48,18 @@ class StashItem implements Fabric {
 
     factory StashItem.fromJson(Map parsedJson) {
       return StashItem(
-        type: parsedJson['type'],
-        subType: parsedJson['subType'],
-        weight: parsedJson['weight'],
-        weightUnit: parsedJson['weightUnit'],
-        fiberContent: fiberMap(parsedJson['fiberContent']), 
-        yardageTotal: parsedJson['yardageTotal'],
-        yardageUnit: parsedJson['yardageUnit'],
-        width: parsedJson['width'],
-        widthUnit: parsedJson['widthUnit'],
-        intendedUse: parsedJson['intendedUse'],
-        branding: Branding.fromJson(parsedJson['branding']),
-        tags: List<String>.from(parsedJson['tags'])
+        type: parsedJson.containsKey('type') ? parsedJson['type'] : null,
+        subType: parsedJson.containsKey('subType') ? parsedJson['subType'] : null,
+        weight: parsedJson.containsKey('weight') ? parsedJson['weight'] : null,
+        weightUnit: parsedJson.containsKey('weightUnit') ? parsedJson['weightUnit'] : null,
+        fiberContent: parsedJson.containsKey('fiberContent') ? fiberMap(parsedJson['fiberContent']) : null, 
+        yardageTotal: parsedJson.containsKey('yardageTotal') ? parsedJson['yardageTotal'] : null,
+        yardageUnit: parsedJson.containsKey('yardageUnit') ? parsedJson['yardageUnit'] : null,
+        width: parsedJson.containsKey('width') ? parsedJson['width'] : null,
+        widthUnit: parsedJson.containsKey('widthUnit') ? parsedJson['widthUnit'] : null,
+        intendedUse: parsedJson.containsKey('intendedUse') ? parsedJson['intendedUse'] : null,
+        branding: parsedJson.containsKey('branding') ? Branding.fromJson(parsedJson['branding']) : null,
+        tags: parsedJson.containsKey('tags') ? List<String>.from(parsedJson['tags']) : null
       );
     }
 
@@ -68,7 +68,7 @@ class StashItem implements Fabric {
       'subType': subType,
       'weight': weight,
       'weightUnit': weightUnit,
-      'fiberContent': fiberContent,
+      //'fiberContent': fiberContent,
       'width': width,
       'widthUnit': widthUnit,
       'intendedUse': intendedUse,

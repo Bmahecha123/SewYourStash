@@ -3,27 +3,42 @@ import 'package:sew_your_stash/modules/common/services/sign_in.dart';
 import 'package:sew_your_stash/theme/theme.dart';
 
 class AppDrawer extends StatelessWidget {
+  final String profileUrl;
+  final String displayName;
+  final String displayEmail;
+
+  AppDrawer({this.profileUrl, this.displayName, this.displayEmail});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            child: CircleAvatar(
-              //child: Icon(Icons.person),
-              backgroundColor: grey,
+          UserAccountsDrawerHeader(
+          //   child: Column(children: <Widget>[
+          //       CircleAvatar(
+          //         child: Image.network(profileUrl),
+          //         backgroundColor: grey,
+          //       ),
+          //       Text(displayName)
+          //   ],
+          // ),
+            accountName: Text(displayName),
+            accountEmail: Text(displayEmail),
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: NetworkImage(profileUrl)
             ),
             decoration: BoxDecoration(color: Colors.teal),
           ),
-          listTileTheme(
-              context,
-              ListTile(
-                  leading: iconTheme(context, Icon(Icons.dashboard)),
-                  title: Text('Dashboard'),
-                  onTap: () {
-                    Navigator.popAndPushNamed(context, '/');
-                  })),
+          // listTileTheme(
+          //     context,
+          //     ListTile(
+          //         leading: iconTheme(context, Icon(Icons.dashboard)),
+          //         title: Text('Dashboard'),
+          //         onTap: () {
+          //           Navigator.popAndPushNamed(context, '/home');
+          //         })),
           listTileTheme(
               context,
               ListTile(
@@ -33,15 +48,15 @@ class AppDrawer extends StatelessWidget {
                   Navigator.popAndPushNamed(context, '/stash');
                 },
               )),
-          listTileTheme(
-              context,
-              ListTile(
-                leading: iconTheme(context, Icon(Icons.work)),
-                title: Text('Projects'),
-                onTap: () {
-                  Navigator.popAndPushNamed(context, '/projects');
-                },
-              )),
+          // listTileTheme(
+          //     context,
+          //     ListTile(
+          //       leading: iconTheme(context, Icon(Icons.work)),
+          //       title: Text('Projects'),
+          //       onTap: () {
+          //         Navigator.popAndPushNamed(context, '/projects');
+          //       },
+          //     )),
           Divider(),
           ListTile(
             leading: iconTheme(context, iconTheme(context, Icon(Icons.person))),

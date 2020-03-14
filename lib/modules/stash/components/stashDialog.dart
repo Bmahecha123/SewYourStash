@@ -11,8 +11,9 @@ import 'package:flutter/services.dart'
 
 class StashDialog extends StatefulWidget {
   final Function(StashItem) onStashItemAdded;
+  final List<FabricType> fabricTypes;
 
-  StashDialog({this.onStashItemAdded});
+  StashDialog({this.onStashItemAdded, this.fabricTypes});
 
   @override
   _StashDialogState createState() =>
@@ -30,11 +31,10 @@ class _StashDialogState extends State<StashDialog> {
       branding: Branding(brand: "", designer: ""),
       tags: []);
   List<String> _fabricSubTypes = [];
-  String _widthUnit = 'in';
 
   final Function(StashItem) onStashItemAdded;
 
-  _StashDialogState({this.onStashItemAdded});
+  _StashDialogState({this.onStashItemAdded, this.fabricTypes});
 
   @override
   void initState() {
@@ -94,7 +94,7 @@ class _StashDialogState extends State<StashDialog> {
                               value: value.type, child: Text(value.type));
                         }).toList(),
                         validator: (value) => value == null
-                            ? 'Please select a fabric type.'
+                            ? 'Select a fabric type.'
                             : null,
                       ),
                       Visibility(
@@ -118,7 +118,7 @@ class _StashDialogState extends State<StashDialog> {
                       Row(
                           children: <Widget>[
                             Flexible(
-                                flex: 3,
+                                flex: 2,
                                 child: TextFormField(
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
@@ -131,7 +131,7 @@ class _StashDialogState extends State<StashDialog> {
                                   onChanged: (String newValue) {
                                     _stashItem.weight = int.parse(newValue);
                                   },
-                                  validator: (value) => value.isEmpty ? 'Please enter weight.' : null,
+                                  validator: (value) => value.isEmpty ? 'Enter weight.' : null,
                                 )),
                             Flexible(
                               flex: 1,
@@ -140,7 +140,7 @@ class _StashDialogState extends State<StashDialog> {
                                   contentPadding: EdgeInsets.all(0.0)
                                 ),
                                   value: _stashItem.weightUnit,
-                                  items: measurementUnits
+                                  items: weightUnits
                                       .map((String unit) =>
                                           DropdownMenuItem<String>(
                                               value: unit, child: Text(unit)))
@@ -148,7 +148,7 @@ class _StashDialogState extends State<StashDialog> {
                                   onChanged: (value) => setState(() {
                                         _stashItem.weightUnit = value;
                                       }),
-                                  validator: (value) => value == null ? 'Please select a unit.' : null,
+                                  validator: (value) => value == null ? 'Select unit.' : null,
                               ),
                             )
                           ],
@@ -156,7 +156,7 @@ class _StashDialogState extends State<StashDialog> {
                       Row(
                           children: <Widget>[
                             Flexible(
-                                flex: 3,
+                                flex: 2,
                                 child: TextFormField(
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
@@ -169,7 +169,7 @@ class _StashDialogState extends State<StashDialog> {
                                   onChanged: (String newValue) {
                                     _stashItem.width = int.parse(newValue);
                                   },
-                                  validator: (value) => value.isEmpty ? 'Please enter width.' : null,
+                                  validator: (value) => value.isEmpty ? 'Enter width.' : null,
                                 )),
                             Flexible(
                               flex: 1,
@@ -186,7 +186,7 @@ class _StashDialogState extends State<StashDialog> {
                                   onChanged: (value) => setState(() {
                                         _stashItem.widthUnit = value;
                                       }),
-                                  validator: (value) => value == null ? 'Please select a unit.' : null,
+                                  validator: (value) => value == null ? 'Select unit.' : null,
                               ),
                             )
                           ],
@@ -194,7 +194,7 @@ class _StashDialogState extends State<StashDialog> {
                       Row(
                           children: <Widget>[
                             Flexible(
-                                flex: 3,
+                                flex: 2,
                                 child: TextFormField(
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
@@ -207,7 +207,7 @@ class _StashDialogState extends State<StashDialog> {
                                   onChanged: (String newValue) {
                                     _stashItem.yardageTotal = int.parse(newValue);
                                   },
-                                  validator: (value) => value.isEmpty ? 'Please enter yardage.' : null,
+                                  validator: (value) => value.isEmpty ? 'Enter yardage.' : null,
                                 )),
                             Flexible(
                               flex: 1,
@@ -224,7 +224,7 @@ class _StashDialogState extends State<StashDialog> {
                                   onChanged: (value) => setState(() {
                                     _stashItem.yardageUnit = value;
                                   }),
-                                  validator: (value) => value == null ? 'Please select a unit.' : null,
+                                  validator: (value) => value == null ? 'Select unit.' : null,
                               ),
                             )
                           ],
@@ -287,6 +287,7 @@ class _StashDialogState extends State<StashDialog> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               onStashItemAdded(_stashItem);
+                              Navigator.of(context).pop();
                             }
                           },
                           child: Icon(

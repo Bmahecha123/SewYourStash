@@ -1,0 +1,69 @@
+[
+    {
+        "type": "Woven",
+        "subTypes": [
+            "Poplin",
+            "Broadcloth",
+            "Muslin",
+            "Linen",
+            "Denim",
+            "Chambray",
+            "Flannel",
+            "Canvas",
+            "Velvet",
+            "Satin",
+            "Chiffon",
+            "Challis"
+        ]
+    },
+    {
+        "type": "Knit",
+        "subTypes": [
+            "Jersey",
+            "Double Knit",
+            "Interlock",
+            "ITY",
+            "French Terry",
+            "Sweater Knit",
+            "Ponte",
+            "Scuba",
+            "Neoprene",
+            "Rib Knit",
+            "Athletic & Performance",
+            "Swimwear",
+            "Tricon Knit",
+            "Fleece",
+            "Sweatshirt Fleece",
+            "Minky"
+        ]
+    },
+    {
+        "type": "Non-Woven",
+        "subTypes": [
+            "Felt",
+            "Batting",
+            "Interfacing"
+        ]
+    },
+    {
+        "type": "Lace & Netting",
+        "subTypes": [
+            "Tulle",
+            "English Netting",
+            "Mesh",
+            "Alencon Lace",
+            "Brussels Lace",
+            "Chantilly Lace",
+            "Duchess Lace",
+            "Guipere Lace",
+            "Schiffli Lace",
+            "Lace Knitting",
+            "Stretch Lace",
+            "Laser Cut Lace"
+        ]
+    },
+    {
+        "type": "Other",
+        "subTypes": []
+    }
+]
