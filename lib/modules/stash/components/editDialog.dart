@@ -30,8 +30,6 @@ class _EditDialogState extends State<EditDialog> {
 @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0))),
         title: Text(
           'Update Stash!',
           textAlign: TextAlign.center,
@@ -272,11 +270,11 @@ class _EditDialogState extends State<EditDialog> {
                           },
                           child: Icon(
                             Icons.send,
-                            color: lightBlue,
+                            color: buttonForegroundColor,
                           ),
                         ),
                         RaisedButton(
-                          child: Icon(Icons.close, color: lightBlue),
+                          child: Icon(Icons.close, color: buttonForegroundColor),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },

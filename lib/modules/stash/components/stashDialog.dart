@@ -56,8 +56,6 @@ class _StashDialogState extends State<StashDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0))),
         title: Text(
           'Add to my Stash!',
           textAlign: TextAlign.center,
@@ -292,11 +290,11 @@ class _StashDialogState extends State<StashDialog> {
                           },
                           child: Icon(
                             Icons.send,
-                            color: lightBlue,
+                            color: buttonForegroundColor,
                           ),
                         ),
                         RaisedButton(
-                          child: Icon(Icons.close, color: lightBlue),
+                          child: Icon(Icons.close, color: buttonForegroundColor),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },

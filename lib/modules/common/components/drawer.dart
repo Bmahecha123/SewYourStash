@@ -16,20 +16,12 @@ class AppDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-          //   child: Column(children: <Widget>[
-          //       CircleAvatar(
-          //         child: Image.network(profileUrl),
-          //         backgroundColor: grey,
-          //       ),
-          //       Text(displayName)
-          //   ],
-          // ),
             accountName: Text(displayName),
             accountEmail: Text(displayEmail),
             currentAccountPicture: CircleAvatar(
               backgroundImage: NetworkImage(profileUrl)
             ),
-            decoration: BoxDecoration(color: Colors.teal),
+            decoration: BoxDecoration(color: blue),
           ),
           // listTileTheme(
           //     context,
@@ -66,6 +58,10 @@ class AppDrawer extends StatelessWidget {
               Navigator.popAndPushNamed(context, '/login');
             },
           ),
+          Container(
+            height: 300,
+            decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/sewing_machine.png'),
+              fit: BoxFit.cover)))
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sew_your_stash/common/keys.dart';
@@ -104,46 +105,57 @@ class _StashPageState extends State<StashPage> {
                   context,
                   ListTile(
                     title: Text(
-                        "${_stash.stashItems[index].type}: ${_stash.stashItems[index].subType}"),
+                        "${_stash.stashItems[index].type}${_stash.stashItems[index].subType != null ? ": " : ""}${_stash.stashItems[index].subType ?? ""}"),
                     subtitle: Text(_stash.stashItems[index].intendedUse),
                     trailing: Text(
                         "${_stash.stashItems[index].yardageTotal} ${_stash.stashItems[index].yardageUnit}"),
                     onTap: () {
                       showDialog(
-                        context: context,
-                        child: StatelessStashDialog(
-                          stashItem: _stash.stashItems[index],
-                          onEditClicked: () {
-                            showDialog(
-                              context: context,
-                              child: EditDialog(
-                                stashItem: _stash.stashItems[index],
-                                fabricTypes: _fabricTypes,
-                                fabricSubTypes: _fabricTypes
-                                  .firstWhere((FabricType type) => type.type.startsWith(_stash.stashItems[index].type))
-                                  .subTypes,
-                                onEdit: (stashItem) {
-                                  _stash.stashItems.remove(_stash.stashItems[index]);
-                                  _stash.stashItems.add(stashItem);
-                                  updateStash(_stash.documentID, _stash.stashItems.map((item) => item.toJson())
-                                    .toList()).then((result) => fetchStash());
-                                },
-                              ));
-                          },
-                      ));
+                          context: context,
+                          child: StatelessStashDialog(
+                            stashItem: _stash.stashItems[index],
+                            onEditClicked: () {
+                              showDialog(
+                                  context: context,
+                                  child: EditDialog(
+                                    stashItem: _stash.stashItems[index],
+                                    fabricTypes: _fabricTypes,
+                                    fabricSubTypes: _fabricTypes
+                                        .firstWhere((FabricType type) =>
+                                            type.type.startsWith(
+                                                _stash.stashItems[index].type))
+                                        .subTypes,
+                                    onEdit: (stashItem) {
+                                      _stash.stashItems
+                                          .remove(_stash.stashItems[index]);
+                                      _stash.stashItems.add(stashItem);
+                                      updateStash(
+                                              _stash.documentID,
+                                              _stash.stashItems
+                                                  .map((item) => item.toJson())
+                                                  .toList())
+                                          .then((result) => fetchStash());
+                                    },
+                                  ));
+                            },
+                          ));
                     },
                     onLongPress: () {
                       showDialog(
-                        context: context,
-                        child: DeleteDialog(
-                          stashItem: _stash.stashItems[index],
-                          onDelete: () {
-                            _stash.stashItems.remove(_stash.stashItems[index]);
-                            updateStash(_stash.documentID, _stash.stashItems.map((item) => item.toJson())
-                              .toList()).then((result) => fetchStash());
-                          },
-                        )
-                      );
+                          context: context,
+                          child: DeleteDialog(
+                            stashItem: _stash.stashItems[index],
+                            onDelete: () {
+                              _stash.stashItems
+                                  .remove(_stash.stashItems[index]);
+                              updateStash(
+                                      _stash.documentID,
+                                      _stash.stashItems
+                                          .map((item) => item.toJson())
+                                          .toList())
+                                  .then((result) => fetchStash());
+                            },
+                          ));
                     },
                   ),
                 ),
@@ -159,9 +171,10 @@ class _StashPageState extends State<StashPage> {
     return Scaffold(
       appBar: appBar('My Stash', context),
       drawer: AppDrawer(
-        profileUrl: _photoUrl, 
-        displayName: _displayName, 
-        displayEmail: _email,),
+        profileUrl: _photoUrl,
+        displayName: _displayName,
+        displayEmail: _email,
+      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
