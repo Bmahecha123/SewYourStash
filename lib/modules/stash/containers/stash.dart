@@ -104,6 +104,7 @@ class _StashPageState extends State<StashPage> {
                 listTileTheme(
                   context,
                   ListTile(
+                    contentPadding: EdgeInsets.fromLTRB(0.0, 0.0, 15, 0.0),
                     leading: Tab(
                         icon: Image.asset(
                       'assets/thread2.png',
