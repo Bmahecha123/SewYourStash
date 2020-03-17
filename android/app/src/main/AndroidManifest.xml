@@ -7,7 +7,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="sew_your_stash"
+        android:label="Sew Your Stash"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
