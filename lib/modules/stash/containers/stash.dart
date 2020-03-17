@@ -104,6 +104,12 @@ class _StashPageState extends State<StashPage> {
                 listTileTheme(
                   context,
                   ListTile(
+                    leading: Tab(
+                        icon: Image.asset(
+                      'assets/thread2.png',
+                      height: 50,
+                      width: 50,
+                    )),
                     title: Text(
                         "${_stash.stashItems[index].type}${_stash.stashItems[index].subType != null ? ": " : ""}${_stash.stashItems[index].subType ?? ""}"),
                     subtitle: Text(_stash.stashItems[index].intendedUse),
