@@ -14,13 +14,13 @@ class StatelessStashDialog extends StatelessWidget {
     return AlertDialog(
       actions: <Widget>[
         RaisedButton(
-          child: Icon(Icons.close, color: lightBlue),
+          child: Icon(Icons.close, color: buttonForegroundColor),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         RaisedButton(
-          child: Icon(Icons.edit, color: lightBlue),
+          child: Icon(Icons.edit, color: buttonForegroundColor),
           onPressed: () {
             Navigator.of(context).pop();
             onEditClicked();
