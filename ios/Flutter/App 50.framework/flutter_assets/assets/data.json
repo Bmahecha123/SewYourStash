@@ -1,0 +1,92 @@
+[
+    {
+        "name": "Red Sailor Scout",
+        "description": "This power ranger was always the mean one I remember o.o!",
+        "fabric": [
+            {
+                "type": "quilting cotton",
+                "subType": "poplin",
+                "weight": "heavyweight",
+                "fiberContent": {
+                    "cotton": 45,
+                    "linen": 25 
+                 },
+                "yardage": 2,
+                "width": 45,
+                "intendedUse": "dress",
+                "branding": {
+                    "brand": "Chanel",
+                    "designer": "Michael Kors"
+                },
+                "tags": [
+                    "fashion",
+                    "side project"
+                ]
+            }, {
+                "type": "Woven",
+                "subType": "Linen",
+                "weight": "heavyweight",
+                "fiberContent": {
+                   "cotton": 45,
+                   "linen": 25 
+                },
+                "yardage": 3,
+                "width": 48,
+                "intendedUse": "pants",
+                "branding": {
+                    "brand": "Sears",
+                    "designer": "Christine Mahecha"
+                },
+                "tags": [
+                    "cosplay",
+                    "warcraft"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Orc Cosplay",
+        "description": "Brian really wants to dress up as an Orc for next Blizzcon; wierdo.",
+        "fabric": [
+            {
+                "type": "Woven",
+                "subType": "Linen",
+                "weight": "heavyweight",
+                "fiberContent": {
+                    "cotton": 45,
+                    "linen": 25 
+                 },
+                "yardage": 3,
+                "width": 48,
+                "intendedUse": "pants",
+                "branding": {
+                    "brand": "Sears",
+                    "designer": "Christine Mahecha"
+                },
+                "tags": [
+                    "cosplay",
+                    "warcraft"
+                ]
+            }, {
+                "type": "quilting cotton",
+                "subType": "poplin",
+                "weight": "heavyweight",
+                "fiberContent": {
+                    "cotton": 45,
+                    "linen": 25 
+                 },
+                "yardage": 2,
+                "width": 45,
+                "intendedUse": "dress",
+                "branding": {
+                    "brand": "Chanel",
+                    "designer": "Michael Kors"
+                },
+                "tags": [
+                    "fashion",
+                    "side project"
+                ]
+            }
+        ]
+    }
+]
