@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>129258458743-au5erea56o50v4n92519r0d1g1qumf4q.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.129258458743-au5erea56o50v4n92519r0d1g1qumf4q</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>129258458743-ikui7thuv3iophd9855kob2n256gfrb8.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAv2qXIJisWdXX8holJYKU_Dpbxis3aK2s</string>
+	<key>GCM_SENDER_ID</key>
+	<string>129258458743</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mahechabjj.sewyourstash</string>
+	<key>PROJECT_ID</key>
+	<string>sew-your-stash</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sew-your-stash.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:129258458743:ios:2ddca8a669de3842430072</string>
+	<key>DATABASE_URL</key>
+	<string>https://sew-your-stash.firebaseio.com</string>
+</dict>
+</plist>

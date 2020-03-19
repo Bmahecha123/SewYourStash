@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:129258458743:android:00b120b2f9763f91430072",
+        "mobilesdk_app_id": "1:129258458743:android:c80bf99678c265ca430072",
         "android_client_info": {
-          "package_name": "com.example.sew_your_stash"
+          "package_name": "com.mahechabjj.sewyourstash"
         }
       },
       "oauth_client": [
         {
-          "client_id": "129258458743-chsi8eajb37iitp4827c9fn54qiqm7nf.apps.googleusercontent.com",
+          "client_id": "129258458743-ikui7thuv3iophd9855kob2n256gfrb8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.sew_your_stash",
+            "package_name": "com.mahechabjj.sewyourstash",
             "certificate_hash": "c76405c809690e2932c7efdf3bcf1419a9142040"
           }
         },
@@ -38,6 +38,14 @@
             {
               "client_id": "129258458743-7skfeoenj2pm9r5p0v6u81654thcbnml.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "129258458743-au5erea56o50v4n92519r0d1g1qumf4q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mahechabjj.sewyourstash",
+                "app_store_id": "1503417441"
+              }
             }
           ]
         }
