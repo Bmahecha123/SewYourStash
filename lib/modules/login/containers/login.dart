@@ -10,25 +10,30 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isButtonDisabled = false;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
 
     _isButtonDisabled = true;
+    _isLoading = true;
     isUserSignedIn().then((isUserSignedIn) {
       setState(() {
         if (isUserSignedIn)
           Navigator.pushReplacementNamed(context, '/stash');
 
         _isButtonDisabled = false;
+        _isLoading = false;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _body(context));
+    return Scaffold(body: _isLoading 
+    ? CircularProgressIndicator()
+    : _body(context));
   }
 
   Widget _signInAndOutBtn(String text, Function fn) {
