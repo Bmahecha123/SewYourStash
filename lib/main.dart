@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sew_your_stash/modules/login/containers/login.dart';
 import 'package:sew_your_stash/routes/routes.dart';
 import 'package:sew_your_stash/theme/theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
+import 'modules/login/containers/login.dart';
 
 void main() {
     FlutterError.onError = (FlutterErrorDetails details) {
@@ -23,8 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Sew Your Stash',
       theme: appTheme(context),
-      // home: LoginPage(),
-      initialRoute: '/login',
+      home: LoginPage(),
       routes: routes(),
     );
   }

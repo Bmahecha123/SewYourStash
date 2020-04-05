@@ -1,1 +1,1 @@
-cd ios && pod deintegrate && pod install && cd ..
+rm -rf ios/Flutter/App.framework && cd ios && pod deintegrate && pod install && cd .. && xattr -cr

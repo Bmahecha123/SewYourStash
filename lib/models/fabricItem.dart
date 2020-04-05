@@ -31,7 +31,6 @@ class FabricItem implements Fabric {
     FabricItem({this.type, this.subType, this.weight, this.fiberContent,
     this.yardageUsed, this.yardageTotal, this.width, this.intendedUse, this.branding, this.tags, weightUnit, yardageUnit, widthUnit});
 
-    @override
     static Map<String, int> fiberMap(Map<String, dynamic> parsedJson) {
       List<String> values = List.from(parsedJson.keys);
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sew_your_stash/modules/common/services/sign_in.dart';
-import 'package:sew_your_stash/theme/theme.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -10,52 +9,31 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _isButtonDisabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _isButtonDisabled = true;
+    isUserSignedIn().then((isUserSignedIn) {
+      setState(() {
+        if (isUserSignedIn)
+          Navigator.pushReplacementNamed(context, '/stash');
+
+        _isButtonDisabled = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/background.png'),
-            fit: BoxFit.cover
-          )
-        ),
-        child: Stack(
-          children: [
-      //   Padding(padding: EdgeInsets.all(10.0),
-      //   child: Align(
-      //     alignment: Alignment.topLeft,
-      //     child: Image(
-      //       image: AssetImage('assets/background.png'),
-      //     ),
-      //   ),
-      // ),
-        Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image(
-                image: AssetImage('assets/square_logo.png'),),
-              SizedBox(height: 50),
-              _signInAndOutBtn('Sign in with Google', () {
-                signInWithGoogle().then((data) {
-                  //TODO ADD SERVICE METHOD TO GRAB USER IN DB
-                  Navigator.popAndPushNamed(context, '/stash');
-                });
-              }),
-            ],
-          ),
-        ),
-      ]
-      ),
-      )
-    );
+    return Scaffold(body: _body(context));
   }
 
   Widget _signInAndOutBtn(String text, Function fn) {
     return RaisedButton(
-      onPressed: fn,
+      onPressed: _isButtonDisabled ? null : fn,
       highlightElevation: 0,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -77,5 +55,70 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Widget _body(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
+
+    if (orientation == Orientation.portrait) {
+      return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/background.png'), fit: BoxFit.cover)),
+        child: Stack(children: [
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image(
+                  image: AssetImage('assets/square_logo.png'),
+                ),
+                SizedBox(height: 50),
+                _signInAndOutBtn('Sign in with Google', () {
+                  setState(() {
+                    _isButtonDisabled = true;
+                  });
+                  signInWithGoogle().then((data) {
+                    setState(() {
+                      Navigator.pushReplacementNamed(context, '/stash');
+                    });
+                  }).catchError((onError) {
+                  setState(() {
+                    _isButtonDisabled = false;
+                  });
+                  });
+                }),
+              ],
+            ),
+          ),
+        ]),
+      );
+    } else {
+      return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/background.png'), fit: BoxFit.cover)),
+        child: Stack(children: [
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image(
+                    image: AssetImage('assets/square_logo.png'),
+                    height: 300,
+                    width: 300),
+                _signInAndOutBtn('Sign in with Google', () {
+                  signInWithGoogle().then((data) {
+                    Navigator.popAndPushNamed(context, '/stash');
+                  });
+                }),
+              ],
+            ),
+          ),
+        ]),
+      );
+    }
   }
 }

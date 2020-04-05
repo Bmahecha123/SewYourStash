@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:sew_your_stash/common/fabricTypes.dart';
 import 'package:sew_your_stash/common/units.dart';
 import 'package:sew_your_stash/models/branding.dart';
 import 'package:sew_your_stash/models/fabricType.dart';
@@ -11,9 +10,8 @@ import 'package:flutter/services.dart'
 
 class StashDialog extends StatefulWidget {
   final Function(StashItem) onStashItemAdded;
-  final List<FabricType> fabricTypes;
 
-  StashDialog({this.onStashItemAdded, this.fabricTypes});
+  StashDialog({this.onStashItemAdded});
 
   @override
   _StashDialogState createState() =>
@@ -22,7 +20,6 @@ class StashDialog extends StatefulWidget {
 
 class _StashDialogState extends State<StashDialog> {
   final _formKey = GlobalKey<FormState>();
-  List<FabricType> fabricTypes = [];
   final StashItem _stashItem = StashItem(
       type: null,
       subType: null,
@@ -34,24 +31,7 @@ class _StashDialogState extends State<StashDialog> {
 
   final Function(StashItem) onStashItemAdded;
 
-  _StashDialogState({this.onStashItemAdded, this.fabricTypes});
-
-  @override
-  void initState() {
-    super.initState();
-
-    rootBundle.loadString('assets/fabricTypes.json').then((jsonString) {
-      final jsonResponse = json.decode(jsonString);
-
-      List<dynamic> fabricTypeMap = List.from(jsonResponse);
-
-      setState(() {
-        fabricTypes = fabricTypeMap
-            .map((dynamic fabricType) => FabricType.fromJson(fabricType))
-            .toList();
-      });
-    });
-  }
+  _StashDialogState({this.onStashItemAdded});
 
   @override
   Widget build(BuildContext context) {

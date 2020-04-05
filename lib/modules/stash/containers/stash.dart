@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:sew_your_stash/common/fabricTypes.dart';
 import 'package:sew_your_stash/common/keys.dart';
-import 'package:sew_your_stash/models/fabricItem.dart';
 import 'package:sew_your_stash/models/fabricType.dart';
 import 'package:sew_your_stash/models/stash.dart';
 import 'package:sew_your_stash/models/stashItem.dart';
@@ -29,20 +25,19 @@ class StashPage extends StatefulWidget {
 class _StashPageState extends State<StashPage> {
   bool _isLoading = false;
   Stash _stash = Stash(stashItems: []);
-  final _stashList = List<ListTile>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  List<FabricType> _fabricTypes = [];
   String _photoUrl;
   String _displayName;
   String _email;
+  TextStyle textStyle =
+      TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: blue);
 
   @override
   void initState() {
     super.initState();
 
     fetchStash();
-    loadFabricTypes();
 
     getValFromLocalStorage(photoUrl).then((url) {
       setState(() {
@@ -57,20 +52,6 @@ class _StashPageState extends State<StashPage> {
     getValFromLocalStorage(email).then((email) {
       setState(() {
         _email = email;
-      });
-    });
-  }
-
-  Future<String> loadFabricTypes() {
-    return rootBundle.loadString('assets/fabricTypes.json').then((jsonString) {
-      final jsonResponse = json.decode(jsonString);
-
-      List<dynamic> fabricTypeMap = List.from(jsonResponse);
-
-      setState(() {
-        _fabricTypes = fabricTypeMap
-            .map((dynamic fabricType) => FabricType.fromJson(fabricType))
-            .toList();
       });
     });
   }
@@ -93,84 +74,108 @@ class _StashPageState extends State<StashPage> {
             }));
   }
 
+  Widget emptyStash() {
+    return Stack(
+      children: <Widget>[
+        Align(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                    child: Text('*Tumble Fabrics blowing in the wind..*',
+                        style: textStyle)),
+                Image(image: AssetImage('assets/fabric.png'))
+              ],
+            ))
+      ],
+    );
+  }
+
   Widget _buildStash() {
     return RefreshIndicator(
         onRefresh: () => fetchStash(),
         key: _refreshIndicatorKey,
-        child: ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
-              children: <Widget>[
-                listTileTheme(
-                  context,
-                  ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(0.0, 0.0, 15, 0.0),
-                    leading: Tab(
-                        icon: Image.asset(
-                      'assets/thread2.png',
-                      height: 50,
-                      width: 50,
-                    )),
-                    title: Text(
-                        "${_stash.stashItems[index].type}${_stash.stashItems[index].subType != null ? ": " : ""}${_stash.stashItems[index].subType ?? ""}"),
-                    subtitle: Text(_stash.stashItems[index].intendedUse),
-                    trailing: Text(
-                        "${_stash.stashItems[index].yardageTotal} ${_stash.stashItems[index].yardageUnit}"),
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          child: StatelessStashDialog(
-                            stashItem: _stash.stashItems[index],
-                            onEditClicked: () {
-                              showDialog(
-                                  context: context,
-                                  child: EditDialog(
-                                    stashItem: _stash.stashItems[index],
-                                    fabricTypes: _fabricTypes,
-                                    fabricSubTypes: _fabricTypes
-                                        .firstWhere((FabricType type) =>
-                                            type.type.startsWith(
-                                                _stash.stashItems[index].type))
-                                        .subTypes,
-                                    onEdit: (stashItem) {
-                                      _stash.stashItems
-                                          .remove(_stash.stashItems[index]);
-                                      _stash.stashItems.add(stashItem);
-                                      updateStash(
-                                              _stash.documentID,
-                                              _stash.stashItems
-                                                  .map((item) => item.toJson())
-                                                  .toList())
-                                          .then((result) => fetchStash());
-                                    },
-                                  ));
-                            },
-                          ));
-                    },
-                    onLongPress: () {
-                      showDialog(
-                          context: context,
-                          child: DeleteDialog(
-                            stashItem: _stash.stashItems[index],
-                            onDelete: () {
-                              _stash.stashItems
-                                  .remove(_stash.stashItems[index]);
-                              updateStash(
-                                      _stash.documentID,
-                                      _stash.stashItems
-                                          .map((item) => item.toJson())
-                                          .toList())
-                                  .then((result) => fetchStash());
-                            },
-                          ));
-                    },
-                  ),
-                ),
-              ],
-            );
-          },
-          itemCount: _stash.stashItems.length,
-        ));
+        child: _stash.stashItems.length == 0
+            ? emptyStash()
+            : ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: <Widget>[
+                      listTileTheme(
+                        context,
+                        ListTile(
+                          contentPadding:
+                              EdgeInsets.fromLTRB(0.0, 0.0, 15, 0.0),
+                          leading: Tab(
+                              icon: Image.asset(
+                            'assets/thread2.png',
+                            height: 50,
+                            width: 50,
+                          )),
+                          title: Text(
+                              "${_stash.stashItems[index].type}${_stash.stashItems[index].subType != null ? ": " : ""}${_stash.stashItems[index].subType ?? ""}"),
+                          subtitle: Text(_stash.stashItems[index].intendedUse),
+                          trailing: Text(
+                              "${_stash.stashItems[index].yardageTotal} ${_stash.stashItems[index].yardageUnit}"),
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                child: StatelessStashDialog(
+                                  stashItem: _stash.stashItems[index],
+                                  onEditClicked: () {
+                                    showDialog(
+                                        context: context,
+                                        child: EditDialog(
+                                          stashItem: _stash.stashItems[index],
+                                          fabricTypes: fabricTypes,
+                                          fabricSubTypes: fabricTypes
+                                              .firstWhere((FabricType type) =>
+                                                  type.type.startsWith(_stash
+                                                      .stashItems[index].type))
+                                              .subTypes,
+                                          onEdit: (stashItem) {
+                                            _stash.stashItems.remove(
+                                                _stash.stashItems[index]);
+                                            _stash.stashItems.add(stashItem);
+                                            updateStash(
+                                                    _stash.documentID,
+                                                    _stash.stashItems
+                                                        .map((item) =>
+                                                            item.toJson())
+                                                        .toList())
+                                                .then((result) => fetchStash());
+                                          },
+                                        ));
+                                  },
+                                ));
+                          },
+                          onLongPress: () {
+                            showDialog(
+                                context: context,
+                                child: DeleteDialog(
+                                  stashItem: _stash.stashItems[index],
+                                  onDelete: () {
+                                    _stash.stashItems
+                                        .remove(_stash.stashItems[index]);
+                                    updateStash(
+                                            _stash.documentID,
+                                            _stash.stashItems
+                                                .map((item) => item.toJson())
+                                                .toList())
+                                        .then((result) => fetchStash());
+                                  },
+                                ));
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                itemCount: _stash.stashItems.length,
+              ));
   }
 
   @override
@@ -195,7 +200,6 @@ class _StashPageState extends State<StashPage> {
           showDialog(
               context: context,
               child: StashDialog(
-                fabricTypes: _fabricTypes,
                 onStashItemAdded: (StashItem item) {
                   _stash.stashItems.add(item);
 

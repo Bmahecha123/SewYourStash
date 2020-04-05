@@ -1,4 +1,4 @@
-package com.example.sew_your_stash
+package com.mahechabjj.sewyourstash
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

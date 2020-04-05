@@ -33,7 +33,6 @@ class StashItem implements Fabric {
       this.fiberContent, this.width, this.widthUnit, this.intendedUse, 
       this.branding, this.tags, this.yardageTotal, this.yardageUnit});
 
-   @override
    static Map<String, int> fiberMap(Map parsedJson) {
       List<String> values = List.from(parsedJson.keys);
 

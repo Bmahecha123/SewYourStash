@@ -42,7 +42,7 @@ class AppDrawer extends StatelessWidget {
                 ),
                 title: Text('My Stash'),
                 onTap: () {
-                  Navigator.popAndPushNamed(context, '/stash');
+                  Navigator.pushReplacementNamed(context, '/stash');
                 },
               )),
           // listTileTheme(
@@ -76,7 +76,7 @@ class AppDrawer extends StatelessWidget {
               child: RaisedButton(
                 onPressed: () {
                   signOutGoogle();
-                  Navigator.popAndPushNamed(context, '/login');
+                  Navigator.pushReplacementNamed(context, '/login');
                 },
                 highlightElevation: 0,
                 child: Padding(

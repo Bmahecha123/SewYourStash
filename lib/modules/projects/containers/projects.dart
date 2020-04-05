@@ -10,8 +10,6 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _fabricList = List<ListTile>();
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sew_your_stash/models/stashItem.dart';
-import 'package:sew_your_stash/modules/stash/components/editDialog.dart';
 import 'package:sew_your_stash/theme/theme.dart';
 
 class StatelessStashDialog extends StatelessWidget {

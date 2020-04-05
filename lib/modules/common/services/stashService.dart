@@ -1,6 +1,5 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sew_your_stash/models/stashItem.dart';
 
 Future<void> createStash(String id) {
   return Firestore

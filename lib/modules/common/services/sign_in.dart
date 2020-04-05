@@ -4,7 +4,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sew_your_stash/common/keys.dart';
 import 'package:sew_your_stash/modules/common/services/local_storage.dart';
 import 'package:sew_your_stash/modules/common/services/stashService.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -35,12 +34,22 @@ Future<FirebaseUser> signInWithGoogle() async {
   await addValToLocalStorage(email, currentUser.email);
   
   //check if stash exists if it doesn't then create it..
-  getStash(currentUser.uid).then((DocumentSnapshot snapshot) => {
+  getStash(currentUser.uid).then((DocumentSnapshot snapshot) async => {
     if (!snapshot.exists)
-        createStash(currentUser.uid)
+        await createStash(currentUser.uid)
   });
   
   return user;
+}
+
+Future<bool> isUserSignedIn() async {
+  FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
+
+  String currentUUID = await getValFromLocalStorage(googleId);
+  if (currentUUID == null) {
+    return false;
+  }
+  return currentUser.uid == currentUUID;
 }
 
 void signOutGoogle() async {
